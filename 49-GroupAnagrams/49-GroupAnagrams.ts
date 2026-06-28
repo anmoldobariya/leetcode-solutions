@@ -1,22 +1,24 @@
-// Last updated: 6/28/2026, 10:50:45 PM
-1function groupAnagrams(strs: string[]): string[][] {
-2    const groups = new Map<string, string[]>();
+// Last updated: 6/28/2026, 11:06:05 PM
+1function isValid(s: string): boolean {
+2    if (s.length % 2 !== 0) return false;
 3
-4
-5    for (const s of strs) {
-6        const counts = new Array(26).fill(0);
-7
-8        for (let i = 0; i < s.length; i++) {
-9            counts[s.charCodeAt(i) - 97]++;
-10        }
+4    const openingBrackets = new Set(['(', '{', '[']);
+5    const map = new Map([
+6        [')', '('],
+7        ['}', '{'],
+8        [']', '[']
+9    ]);
+10    const stack: string[] = [];
 11
-12        const key = counts.join(':');
-13        if (groups.has(key)) {
-14            groups.get(key).push(s);
-15        } else {
-16            groups.set(key, [s]);
-17        }
-18    }
-19
-20    return Array.from(groups.values());
-21};
+12    for (const ch of s) {
+13        if (openingBrackets.has(ch)) {
+14            stack.push(ch)
+15        } else if (map.get(ch) === stack[stack.length - 1]) {
+16            stack.pop()
+17        } else {
+18            return false
+19        }
+20    }
+21
+22    return stack.length === 0
+23};
