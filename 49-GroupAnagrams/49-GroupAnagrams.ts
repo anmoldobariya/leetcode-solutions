@@ -1,24 +1,22 @@
-// Last updated: 6/28/2026, 11:06:05 PM
-1function isValid(s: string): boolean {
-2    if (s.length % 2 !== 0) return false;
-3
-4    const openingBrackets = new Set(['(', '{', '[']);
-5    const map = new Map([
-6        [')', '('],
-7        ['}', '{'],
-8        [']', '[']
-9    ]);
-10    const stack: string[] = [];
-11
-12    for (const ch of s) {
-13        if (openingBrackets.has(ch)) {
-14            stack.push(ch)
-15        } else if (map.get(ch) === stack[stack.length - 1]) {
-16            stack.pop()
-17        } else {
-18            return false
-19        }
-20    }
-21
-22    return stack.length === 0
-23};
+// Last updated: 6/28/2026, 11:20:16 PM
+1function search(nums: number[], target: number): number {
+2    let left = 0;
+3    let right = nums.length - 1;
+4
+5    while (left <= right) {
+6        const midWay = left + Math.floor((right - left) / 2);
+7        const value = nums[midWay];
+8
+9        if (value === target) {
+10            return midWay;
+11        }
+12
+13        if (value > target) {
+14            right = midWay - 1;
+15        } else {
+16            left = midWay + 1;
+17        }
+18    }
+19
+20    return -1;
+21};
